@@ -4,6 +4,9 @@ import Class.Adherant;
 import Class.Seance;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -65,7 +68,10 @@ public class Main {
 
         JFrame j=new JFrame();
         j.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        j.setSize(200,200);
+        j.setSize(400,200);
+
+        CardLayout cardLayout = new CardLayout();
+        JPanel container = new JPanel(cardLayout);
 
         JPanel p=new JPanel();
         p.setLayout(null);
@@ -92,7 +98,54 @@ public class Main {
             }
         });
 
-        j.add(p);
+        JButton b2=new JButton("notification");
+        b2.setBounds(200,100,100,30);
+        p.add(b2);
+
+        JPanel panelNotifications = new JPanel();
+        panelNotifications.add(new JLabel("Aucune nouvelle notification"));
+        JButton retour = new JButton("Retour");
+        panelNotifications.add(retour);
+
+        container.add(p, "accueil");
+        container.add(panelNotifications, "notifications");
+        cardLayout.show(container, "accueil");
+
+
+        b2.addActionListener(e ->
+        {
+            panelNotifications.removeAll();
+            panelNotifications.add(new JLabel("Nouvelles notifications :"));
+            try
+            {
+                int x=a.date_limite_abonnement(7);
+                if(x<=0)
+                 {
+                panelNotifications.add(new JLabel("abonement axpirer"));
+                 }
+                else if(x<30)
+                {
+                panelNotifications.add(new JLabel("l abonnement expire dans:   "+x+"   jours"));
+                }
+            }
+            catch (SQLException ex)
+            {
+                throw new RuntimeException(ex);
+            }
+            catch (ClassNotFoundException ex)
+            {
+                throw new RuntimeException(ex);
+            }
+            panelNotifications.add(retour);
+            panelNotifications.revalidate();
+            panelNotifications.repaint();
+
+            cardLayout.show(container, "notifications");
+        });
+
+        retour.addActionListener(e -> cardLayout.show(container, "accueil"));
+
+        j.add(container);
         j.setVisible(true);
 }
 }
