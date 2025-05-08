@@ -69,4 +69,37 @@ public class Admin extends Utilisateur{
         return adherantsTrouves;
     }
 
+    public int stats1() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.nbr_adherant();
+    }
+
+    public double stats2() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.Chiffre_daffaires();
+    }
+
+    public int stats3() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.Abonnements_par_promotion();
+    }
+
+    public double stats4() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.zoneA();
+    }
+
+    public double stats5() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.zoneB();
+    }
+    public double stats6() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.zoneC();
+    }
+
+    public double stats7() throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        return m.zoneVIP();
+    }
 }

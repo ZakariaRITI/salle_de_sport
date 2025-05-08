@@ -192,4 +192,110 @@ public class Model {
         ps4.executeUpdate();
         }
     }
+
+    public int nbr_adherant() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        String query="select count(*) from adherent";
+        Statement s=c.createStatement();
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getInt(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public double Chiffre_daffaires() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        String query="select sum(tarif) from abonnement";
+        Statement s=c.createStatement();
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getDouble(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public int Abonnements_par_promotion() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        String query="select count(*) from abonnement where promotion=1";
+        Statement s=c.createStatement();
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getInt(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public double zoneA() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        Statement s=c.createStatement();
+        String query="select sum(tarif) from abonnement where zone='Zone A'";
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getDouble(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public double zoneB() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        Statement s=c.createStatement();
+        String query="select sum(tarif) from abonnement where zone='Zone B'";
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getDouble(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public double zoneC() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        Statement s=c.createStatement();
+        String query="select sum(tarif) from abonnement where zone='Zone C'";
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getDouble(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public double zoneVIP() throws SQLException, ClassNotFoundException {
+        Connection c = getConnection();
+        Statement s=c.createStatement();
+        String query="select sum(tarif) from abonnement where zone='Zone VIP'";
+        ResultSet rs=s.executeQuery(query);
+        if(rs.next())
+        {
+            return rs.getDouble(1);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
 }

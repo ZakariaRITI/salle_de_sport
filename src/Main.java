@@ -146,6 +146,15 @@ public class Main {
         retour.addActionListener(e -> cardLayout.show(container, "accueil"));
 
         j.add(container);
-        j.setVisible(true);
+       /* j.setVisible(true);*/
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("le nombre total d'aderants est:"+a.stats1());
+        System.out.println("le chiffre d'affaire est:"+String.format("%.2f",a.stats2()));
+        System.out.println("le nombre d'abonnement par prommotion est:"+a.stats3());
+        System.out.println("revenu de zone A:"+String.format("%.2f",a.stats4()));
+        System.out.println("revenu de zone B:"+String.format("%.2f",a.stats5()));
+        System.out.println("revenu de zone C:"+String.format("%.2f",a.stats6()));
+        System.out.println("revenu de zone VIP:"+String.format("%.2f",a.stats7()));
 }
 }
