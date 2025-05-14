@@ -2,6 +2,9 @@ package Model;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class Model {
 
@@ -296,6 +299,52 @@ public class Model {
         {
             return 0;
         }
+    }
+
+    public ArrayList<String> getCreneauxFromDB() throws Exception {
+        ArrayList<String> creneauxList = new ArrayList<>();
+        String query = "SELECT * from terrain";
+        Connection conn=getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        while (rs.next()) {
+            String id=rs.getString(1);
+            String nom = rs.getString("nom");
+            String type = rs.getString("type");
+            String disponibilite = rs.getString("disponibilite");
+            creneauxList.add(id+","+nom + "," + type + "," + disponibilite );
+        }
+        return creneauxList;
+    }
+    public Vector<String> heuredebut(LocalDate date) throws SQLException, ClassNotFoundException {
+        Connection c = this.getConnection();
+        Vector<String> v = new Vector<>();
+        String query = "select heure_debut , heure_fin from reservation_terrain where date_reserve=?";
+        PreparedStatement ps = c.prepareStatement(query);// Cela convertit la LocalDate en java.sql.Date
+        ps.setDate(1, Date.valueOf(date));
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            String heuredebut = rs.getString(1);
+            String heurefin = rs.getString(2);
+            v.add(heuredebut);
+            v.add(heurefin);
+        }
+        return v;
+    }
+    private ArrayList<LocalTime[]> getReservedTimeRanges(String selectedDate) throws SQLException, ClassNotFoundException {
+        Model m = new Model();
+        Vector<String> reservedVector = m.heuredebut(LocalDate.parse(selectedDate));
+
+        ArrayList<LocalTime[]> reservedRanges = new ArrayList<>();
+
+        for (int i = 0; i < reservedVector.size(); i += 2) {
+            LocalTime start = LocalTime.parse(reservedVector.get(i));
+            LocalTime end = LocalTime.parse(reservedVector.get(i + 1));
+            reservedRanges.add(new LocalTime[]{start, end});
+        }
+
+        return reservedRanges;
     }
 
 }
